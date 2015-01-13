@@ -1,0 +1,18 @@
+LF OS Kernel 4 - ABI Spezifikation
+________________________________________________________________________________
+
+In LF OS gibt es 2 ABI's, die Programm-ABI und die Treiber-ABI. Diese wurden
+voneinander getrennt da ein Treiber viele Funktionen benötigt die von keinem
+Programm benötigt werden. Ein Programm wird höchstwahrscheinlich aber auch keine
+Geräte in das VFS einhängen wollen. Grundsätzlich gilt: ein Treiber darf Treiber
+und Programm-ABI verwenden, ein Programm aber nur die Programm-ABI. Beide ABI's
+haben Gemeinsamkeiten. Wie nun ein Syscall in den Kernel kommt, wird vom
+Plattformmodul entschieden. Am Ende kommt ein Event mit 6 Parametern in den
+Kernel. Im ersten Parameter ist immer die Funktion kodiert. Im HiWord ist die
+Kategorie, im LowByte die Funktion enthalten. Beides wird von der jeweiligen API
+zusammengefügt. Die restlichen Parameter können von den jeweiligen Funktionen
+frei verwendet werden.
+
+
+Treiber-ABI (interrupt 0x52)
+________________________________________________________________________________

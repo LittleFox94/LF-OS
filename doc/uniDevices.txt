@@ -1,0 +1,25 @@
+Universelle Geräte:
+	CPU
+		Die Größe der Datei "/dev/cpu" ist die Größe die für alle Register
+		benötigt wird. Beim Lesen werden die Register zurückgegeben. Reihen-
+		folge wird vom Plattformtreiber bestimmt. Beim Schreiben werden die
+		Register vom Plattformtreiber in der gleichen Reihenfolge wieder-
+		hergestellt. Architekturspezifische CPU Initialisierungen werden beim
+		Initialisieren des Moduls vorgenommen.
+		
+		Kernel ist Plattformunabhängig!
+	
+	Texteingabe/-ausgabe
+		Für Texteingabe/-ausgabe wird das Gerät "/dev/terminal" verwendet. Die
+		Größe entspricht der Anzahl der im Puffer befindlichen SCANCODES(!).
+		Beim Lesen wird ein Scancode nach dem anderen aus dem Puffer zurück-
+		gegeben. Beim Schreiben von Daten werden diese auf das Textausgabegerät
+		ausgegeben. Die Position wird hierbei vom Treiber bestimmt. Zur Ausgabe
+		von Farben werden ANSI-Codes verwendet (Escape-Sequenzen). Diese müssen
+		vom Treiber implementiert werden und sind nur für einen Schreibvorgang
+		gültig. Nach einem Schreibvorgang werden die Standardfarben wieder-
+		hergestellt. Sollte ein Textausgabegerät keine Farben unterstützen,
+		werden die Befehle ignoriert und nicht ausgegeben.
+		
+		Anmerkung: Mit Scancodes sind nicht die Scancodes der Hardware, sondern
+				   die definierten, virtuellen Scancodes gemeint.
