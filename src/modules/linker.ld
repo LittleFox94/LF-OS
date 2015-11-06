@@ -12,13 +12,13 @@ SECTIONS
         *(moduleData)
         *(.text)
     }
-    .data ALIGN(4096) : {
+    .data : {
         *(.data)
     }
-    .rodata ALIGN(4096) : {
+    .rodata : {
         *(.rodata)
     }
-    .bss ALIGN(4096) : {
+    .bss : {
         *(.bss)
     }
     
