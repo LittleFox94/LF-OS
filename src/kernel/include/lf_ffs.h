@@ -26,22 +26,22 @@ typedef struct
 
 class LF_FFS
 {
-	public:
-		LF_FFS(char *buffer);
-		
-		uint64_t get_CountFiles();
-		LF_FFS_ENTRY_T *get_Files();
-		
-		bool get_Valid();
-		
-		void *getFileBufferAddr(char *fileName);
-		int getFileSize(char *fileName);
-		
-	private:
-		LF_FFS_ENTRY_T _files[1024];
-		LF_FFS_HEADER_T _header;
-		bool _isValid;
-		char *_buffer;
+public:
+    LF_FFS(char *buffer);
+
+    uint64_t get_CountFiles();
+    LF_FFS_ENTRY_T *get_Files();
+
+    bool get_Valid();
+
+    void *getFileBufferAddr(char *fileName);
+    int getFileSize(char *fileName);
+
+private:
+    LF_FFS_ENTRY_T _files[1024];
+    LF_FFS_HEADER_T _header;
+    bool _isValid;
+    char *_buffer;
 };
 
 #endif

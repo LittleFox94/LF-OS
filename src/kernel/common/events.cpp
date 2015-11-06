@@ -2,11 +2,11 @@
 
 /** Bearbeitet Exceptions die einen Absturz des Prozessors zufolge haben.
   * Diese Funktion darf nur aufgerufen werden wenn der Fehler nicht korrigiert
-  * werden kann! 
+  * werden kann!
   */
 void Exception(int number, char *errorMsg)
 {
-	crash(errorMsg);
+    crash(errorMsg);
 }
 
 /** Bearbeitet einen Hardwareinterrupt
@@ -15,9 +15,9 @@ void Exception(int number, char *errorMsg)
   */
 void *HardwareInterrupt(int number, void *cpu)
 {
-	// Todo: an Treiber weitergeben
-	
-	return cpu;
+    // Todo: an Treiber weitergeben
+
+    return cpu;
 }
 
 /** Bearbeitet einen Syscall
@@ -26,5 +26,5 @@ void *HardwareInterrupt(int number, void *cpu)
   */
 void Syscall(int number, unsigned int **params, int count)
 {
-	// Todo: mach etwas mit dem Syscall
+    // Todo: mach etwas mit dem Syscall
 }

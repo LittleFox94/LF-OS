@@ -121,97 +121,97 @@ void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, uns
 
 void init_idt()
 {
-	/*             EXCEPTIONS              */
-	idt_set_gate(0,(unsigned)isr0,0x08,0x8E);
-	idt_set_gate(1,(unsigned)isr1,0x08,0x8E);
-	idt_set_gate(2,(unsigned)isr2,0x08,0x8E);
-	idt_set_gate(3,(unsigned)isr3,0x08,0x8E);
-	idt_set_gate(4,(unsigned)isr4,0x08,0x8E);
-	idt_set_gate(5,(unsigned)isr5,0x08,0x8E);
-	idt_set_gate(6,(unsigned)isr6,0x08,0x8E);
-	idt_set_gate(7,(unsigned)isr7,0x08,0x8E);
-	idt_set_gate(8,(unsigned)isr8,0x08,0x8E);
-	idt_set_gate(9,(unsigned)isr9,0x08,0x8E);
-	idt_set_gate(10,(unsigned)isr10,0x08,0x8E);
-	idt_set_gate(11,(unsigned)isr11,0x08,0x8E);
-	idt_set_gate(12,(unsigned)isr12,0x08,0x8E);
-	idt_set_gate(13,(unsigned)isr13,0x08,0x8E);
-	idt_set_gate(14,(unsigned)isr14,0x08,0x8E);
-	idt_set_gate(15,(unsigned)isr15,0x08,0x8E);
-	idt_set_gate(16,(unsigned)isr16,0x08,0x8E);
-	idt_set_gate(17,(unsigned)isr17,0x08,0x8E);
-	idt_set_gate(18,(unsigned)isr18,0x08,0x8E);
-	idt_set_gate(19,(unsigned)isr19,0x08,0x8E);
-	idt_set_gate(20,(unsigned)isr20,0x08,0x8E);
-	idt_set_gate(21,(unsigned)isr21,0x08,0x8E);
-	idt_set_gate(22,(unsigned)isr22,0x08,0x8E);
-	idt_set_gate(23,(unsigned)isr23,0x08,0x8E);
-	idt_set_gate(24,(unsigned)isr24,0x08,0x8E);
-	idt_set_gate(25,(unsigned)isr25,0x08,0x8E);
-	idt_set_gate(26,(unsigned)isr26,0x08,0x8E);
-	idt_set_gate(27,(unsigned)isr27,0x08,0x8E);
-	idt_set_gate(28,(unsigned)isr28,0x08,0x8E);
-	idt_set_gate(29,(unsigned)isr29,0x08,0x8E);
-	idt_set_gate(30,(unsigned)isr30,0x08,0x8E);
-	idt_set_gate(31,(unsigned)isr31,0x08,0x8E);	
-	// IRQs
-	idt_set_gate(32,(unsigned)isr32,0x08,0x8E);
-	idt_set_gate(33,(unsigned)isr33,0x08,0x8E);
-	idt_set_gate(34,(unsigned)isr34,0x08,0x8E);
-	idt_set_gate(35,(unsigned)isr35,0x08,0x8E);
-	idt_set_gate(36,(unsigned)isr36,0x08,0x8E);
-	idt_set_gate(37,(unsigned)isr37,0x08,0x8E);
-	idt_set_gate(38,(unsigned)isr38,0x08,0x8E);
-	idt_set_gate(39,(unsigned)isr39,0x08,0x8E);
-	idt_set_gate(40,(unsigned)isr40,0x08,0x8E);
-	idt_set_gate(41,(unsigned)isr41,0x08,0x8E);
-	idt_set_gate(42,(unsigned)isr42,0x08,0x8E);
-	idt_set_gate(43,(unsigned)isr43,0x08,0x8E);
-	idt_set_gate(44,(unsigned)isr44,0x08,0x8E);
-	idt_set_gate(45,(unsigned)isr45,0x08,0x8E);
-	idt_set_gate(46,(unsigned)isr46,0x08,0x8E);
-	idt_set_gate(47,(unsigned)isr47,0x08,0x8E);
-	// nextgen LF ABI
-	idt_set_gate(147,(unsigned)isr147,0x08,0xEE);
+    /*             EXCEPTIONS              */
+    idt_set_gate(0,(unsigned)isr0,0x08,0x8E);
+    idt_set_gate(1,(unsigned)isr1,0x08,0x8E);
+    idt_set_gate(2,(unsigned)isr2,0x08,0x8E);
+    idt_set_gate(3,(unsigned)isr3,0x08,0x8E);
+    idt_set_gate(4,(unsigned)isr4,0x08,0x8E);
+    idt_set_gate(5,(unsigned)isr5,0x08,0x8E);
+    idt_set_gate(6,(unsigned)isr6,0x08,0x8E);
+    idt_set_gate(7,(unsigned)isr7,0x08,0x8E);
+    idt_set_gate(8,(unsigned)isr8,0x08,0x8E);
+    idt_set_gate(9,(unsigned)isr9,0x08,0x8E);
+    idt_set_gate(10,(unsigned)isr10,0x08,0x8E);
+    idt_set_gate(11,(unsigned)isr11,0x08,0x8E);
+    idt_set_gate(12,(unsigned)isr12,0x08,0x8E);
+    idt_set_gate(13,(unsigned)isr13,0x08,0x8E);
+    idt_set_gate(14,(unsigned)isr14,0x08,0x8E);
+    idt_set_gate(15,(unsigned)isr15,0x08,0x8E);
+    idt_set_gate(16,(unsigned)isr16,0x08,0x8E);
+    idt_set_gate(17,(unsigned)isr17,0x08,0x8E);
+    idt_set_gate(18,(unsigned)isr18,0x08,0x8E);
+    idt_set_gate(19,(unsigned)isr19,0x08,0x8E);
+    idt_set_gate(20,(unsigned)isr20,0x08,0x8E);
+    idt_set_gate(21,(unsigned)isr21,0x08,0x8E);
+    idt_set_gate(22,(unsigned)isr22,0x08,0x8E);
+    idt_set_gate(23,(unsigned)isr23,0x08,0x8E);
+    idt_set_gate(24,(unsigned)isr24,0x08,0x8E);
+    idt_set_gate(25,(unsigned)isr25,0x08,0x8E);
+    idt_set_gate(26,(unsigned)isr26,0x08,0x8E);
+    idt_set_gate(27,(unsigned)isr27,0x08,0x8E);
+    idt_set_gate(28,(unsigned)isr28,0x08,0x8E);
+    idt_set_gate(29,(unsigned)isr29,0x08,0x8E);
+    idt_set_gate(30,(unsigned)isr30,0x08,0x8E);
+    idt_set_gate(31,(unsigned)isr31,0x08,0x8E);
+    // IRQs
+    idt_set_gate(32,(unsigned)isr32,0x08,0x8E);
+    idt_set_gate(33,(unsigned)isr33,0x08,0x8E);
+    idt_set_gate(34,(unsigned)isr34,0x08,0x8E);
+    idt_set_gate(35,(unsigned)isr35,0x08,0x8E);
+    idt_set_gate(36,(unsigned)isr36,0x08,0x8E);
+    idt_set_gate(37,(unsigned)isr37,0x08,0x8E);
+    idt_set_gate(38,(unsigned)isr38,0x08,0x8E);
+    idt_set_gate(39,(unsigned)isr39,0x08,0x8E);
+    idt_set_gate(40,(unsigned)isr40,0x08,0x8E);
+    idt_set_gate(41,(unsigned)isr41,0x08,0x8E);
+    idt_set_gate(42,(unsigned)isr42,0x08,0x8E);
+    idt_set_gate(43,(unsigned)isr43,0x08,0x8E);
+    idt_set_gate(44,(unsigned)isr44,0x08,0x8E);
+    idt_set_gate(45,(unsigned)isr45,0x08,0x8E);
+    idt_set_gate(46,(unsigned)isr46,0x08,0x8E);
+    idt_set_gate(47,(unsigned)isr47,0x08,0x8E);
+    // nextgen LF ABI
+    idt_set_gate(147,(unsigned)isr147,0x08,0xEE);
 
     idtp.limit = (sizeof (struct idt_entry) * 256) - 1;
     idtp.base = (unsigned int)&idt;
-    
-	asm volatile("lidt %0" : : "m" (idtp));
+
+    asm volatile("lidt %0" : : "m" (idtp));
 }
 
 extern "C" struct cpu_state *interrupt_handler(struct cpu_state *cpu)
 {
-	if (cpu->intr <= 0x1f)
-	{		
-		archPanic(exception_messages[cpu->intr]);
-    } 
-	else if(cpu->intr <= 0x2f && cpu->intr >= 0x20)
-	{
+    if (cpu->intr <= 0x1f)
+    {
+        archPanic(exception_messages[cpu->intr]);
+    }
+    else if(cpu->intr <= 0x2f && cpu->intr >= 0x20)
+    {
         return irq_handler(cpu);
     }
-	else if(cpu->intr == 147) // nextgen LF ABI
-	{
-		return lf_abi_handler(cpu);
-	}
-	return cpu;
+    else if(cpu->intr == 147) // nextgen LF ABI
+    {
+        return lf_abi_handler(cpu);
+    }
+    return cpu;
 }
 
 struct cpu_state *irq_handler(struct cpu_state *cpu)
 {
-	HardwareInterrupt(cpu->intr, (void*)cpu);
-	
-	return cpu;
+    HardwareInterrupt(cpu->intr, (void*)cpu);
+
+    return cpu;
 }
 
 struct cpu_state *lf_abi_handler(struct cpu_state *cpu)
 {
-	unsigned int *params[3];
-	params[0] = &cpu->ebx;
-	params[1] = &cpu->ecx;
-	params[2] = &cpu->edx;
-	
-	Syscall(cpu->eax, params, 3);
-	
-	return cpu;
+    unsigned int *params[3];
+    params[0] = &cpu->ebx;
+    params[1] = &cpu->ecx;
+    params[2] = &cpu->edx;
+
+    Syscall(cpu->eax, params, 3);
+
+    return cpu;
 }

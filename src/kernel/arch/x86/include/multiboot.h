@@ -4,15 +4,15 @@
 #include <stdint.h>
 
 struct multiboot_apm_table {
-	short 							version;
-	short 							codeSeg;
-	short *							offset;
-	short 							codeSeg16;
-	short 							dataSeg;
-	short 							flags;
-	short 							codeSegLen;
-	short 							codeSeg16Len;
-	short 							dataSegLen;	
+    short 							version;
+    short 							codeSeg;
+    short *							offset;
+    short 							codeSeg16;
+    short 							dataSeg;
+    short 							flags;
+    short 							codeSegLen;
+    short 							codeSeg16Len;
+    short 							dataSegLen;
 } __attribute__((packed));
 
 struct multiboot_info {

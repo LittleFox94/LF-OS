@@ -20,17 +20,17 @@ extern const uint8_t kernel_end;
   */
 void init_pmm()
 {
-	for(uint64_t i = 0; i < PMMBITMAPSIZE; i++)
-	{
-		PmmBitmap[i] = 0;
-	}
-	
-	for(uint64_t i = (uint32_t)&kernel_start; i < (uint32_t)&kernel_end; i += PAGESIZE)
-	{
-		pmm_mark_used((void*)i);
-	}
-	
-	pmm_mark_used(null);
+    for(uint64_t i = 0; i < PMMBITMAPSIZE; i++)
+    {
+        PmmBitmap[i] = 0;
+    }
+
+    for(uint64_t i = (uint32_t)&kernel_start; i < (uint32_t)&kernel_end; i += PAGESIZE)
+    {
+        pmm_mark_used((void*)i);
+    }
+
+    pmm_mark_used(null);
 }
 
 /** Mark one page as used
@@ -38,17 +38,17 @@ void init_pmm()
   */
 void pmm_mark_used(void *mem)
 {
-	uint64_t page = (uint32_t)mem / PAGESIZE;
-	
-	uint64_t index = page / 64;
-	uint32_t bit = page % 64;
-	
-	PmmBitmap[index] |= (1 << bit);
-	
-	while(!pmm_check_free(firstKnownFreeAddress))
-	{
-		firstKnownFreeAddress = (void*)((uint64_t)firstKnownFreeAddress + PAGESIZE);
-	}
+    uint64_t page = (uint32_t)mem / PAGESIZE;
+
+    uint64_t index = page / 64;
+    uint32_t bit = page % 64;
+
+    PmmBitmap[index] |= (1 << bit);
+
+    while(!pmm_check_free(firstKnownFreeAddress))
+    {
+        firstKnownFreeAddress = (void*)((uint64_t)firstKnownFreeAddress + PAGESIZE);
+    }
 }
 
 /** Mark one page as free
@@ -56,15 +56,15 @@ void pmm_mark_used(void *mem)
   */
 void pmm_mark_free(void *mem)
 {
-	uint64_t page = (uint32_t)mem / PAGESIZE;
-	
-	uint64_t index = page / 64;
-	uint32_t bit = page % 64;
-	
-	PmmBitmap[index] &= ~(1 << bit);
-	
-	if(mem < firstKnownFreeAddress)
-		firstKnownFreeAddress = mem;
+    uint64_t page = (uint32_t)mem / PAGESIZE;
+
+    uint64_t index = page / 64;
+    uint32_t bit = page % 64;
+
+    PmmBitmap[index] &= ~(1 << bit);
+
+    if(mem < firstKnownFreeAddress)
+        firstKnownFreeAddress = mem;
 }
 
 /** Check if a page is marked as free
@@ -73,12 +73,12 @@ void pmm_mark_free(void *mem)
   */
 bool pmm_check_free(void *mem)
 {
-	uint64_t page = (uint32_t)mem / PAGESIZE;
-	
-	uint64_t index = page / 64;
-	uint32_t bit = page % 64;
-	
-	return (PmmBitmap[index] & (1 << bit)) == 0;
+    uint64_t page = (uint32_t)mem / PAGESIZE;
+
+    uint64_t index = page / 64;
+    uint32_t bit = page % 64;
+
+    return (PmmBitmap[index] & (1 << bit)) == 0;
 }
 
 /** Seeks an unused page, mark it as used and returns it's address
@@ -87,17 +87,17 @@ bool pmm_check_free(void *mem)
   */
 void *pmm_alloc()
 {
-	for(uint64_t addr = (uint64_t)firstKnownFreeAddress; addr < MAXMEM; addr += PAGESIZE)
-	{
-		if(pmm_check_free((void*)addr))
-		{
-			pmm_mark_used((void*)addr);
-			
-			return (void*)addr;
-		}
-	}
-	
-	return null;
+    for(uint64_t addr = (uint64_t)firstKnownFreeAddress; addr < MAXMEM; addr += PAGESIZE)
+    {
+        if(pmm_check_free((void*)addr))
+        {
+            pmm_mark_used((void*)addr);
+
+            return (void*)addr;
+        }
+    }
+
+    return null;
 }
 
 /** Allocates a block of memory with 'size' bytes.
@@ -107,37 +107,37 @@ void *pmm_alloc()
   */
 void *pmm_multi_alloc(size_t size)
 {
-	uint32_t num_pages = size / PAGESIZE + (size % PAGESIZE >= 1 ? PAGESIZE : 0);
-	
-	for(uint64_t addr = (uint64_t)firstKnownFreeAddress; addr < MAXMEM; addr += PAGESIZE)
-	{
-		bool is_free = true;
-		
-		uint64_t tempAddr = addr;
-		uint32_t pages = 0;
-		
-		while(pages < num_pages && is_free)
-		{
-			is_free = pmm_check_free((void*)tempAddr);
-			
-			tempAddr += PAGESIZE;
-			pages++;
-		}
-		
-		if(is_free)
-		{
-			pages = 0;
-			
-			for(; pages < num_pages; pages++)
-			{
-				pmm_mark_used((void*)(addr + (pages * PAGESIZE))); // mark memory as used
-			}
-			
-			return (void*)addr;
-		}
-		else
-			addr = tempAddr; // don't check some addresses twice
-	}
-	
-	return null;
+    uint32_t num_pages = size / PAGESIZE + (size % PAGESIZE >= 1 ? PAGESIZE : 0);
+
+    for(uint64_t addr = (uint64_t)firstKnownFreeAddress; addr < MAXMEM; addr += PAGESIZE)
+    {
+        bool is_free = true;
+
+        uint64_t tempAddr = addr;
+        uint32_t pages = 0;
+
+        while(pages < num_pages && is_free)
+        {
+            is_free = pmm_check_free((void*)tempAddr);
+
+            tempAddr += PAGESIZE;
+            pages++;
+        }
+
+        if(is_free)
+        {
+            pages = 0;
+
+            for(; pages < num_pages; pages++)
+            {
+                pmm_mark_used((void*)(addr + (pages * PAGESIZE))); // mark memory as used
+            }
+
+            return (void*)addr;
+        }
+        else
+            addr = tempAddr; // don't check some addresses twice
+    }
+
+    return null;
 }

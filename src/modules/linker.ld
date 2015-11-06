@@ -7,11 +7,9 @@ ENTRY(_start)
  */
 SECTIONS
 {
-    . = 0xF00000;
-    kernel_start = .;
-
+    . = 0x8000000;
     .text : {
-        *(multiboot)
+        *(moduleData)
         *(.text)
     }
     .data ALIGN(4096) : {
@@ -25,6 +23,5 @@ SECTIONS
     }
     
     . = ALIGN(4096);
-    kernel_end = .;
 }
 

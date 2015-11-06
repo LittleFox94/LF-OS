@@ -1,7 +1,30 @@
 #include <lf_os.h>
 #include <lf_ffs.h>
 
+#include "../../modules/module.h"
+
 void kernelMain(char *ptrInitrd, int initrdLength)
 {
-	LF_FFS initrd(ptrInitrd);
+    uint32_t* magic_pointer = (uint32_t*)ptrInitrd;
+
+    while((*magic_pointer) != 0x1F0510AD && magic_pointer < (uint32_t*)(ptrInitrd + initrdLength)) {
+        magic_pointer += sizeof(uint32_t);
+    }
+
+
+    struct module_collection* modules = (struct module_collection*)magic_pointer;
+
+    if(modules->version_major != 0 || modules->version_minor != 1) {
+        archPanic("Miep");
+    }
+
+    for(int step = 1; step < 12; step++) {
+        for(int i = 0; i < modules->num_modules; i++) {
+            if(modules->modules[i].type == step) {
+                modules->modules[i].init();
+            }
+        }
+    }
+
+    while(1);
 }
