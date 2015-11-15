@@ -54,7 +54,9 @@ extern "C" void archMain(struct multiboot_info *mbi)
         mmap++;
     }
 
-    asm("sti");
+    for(uint32_t i = 0; i < 0x500000; i+=0x1000) {
+        pmm_mark_used((void*)i);
+    }
 
     // starting the kernel
     kernelMain((char*)firstModule->mod_start, firstModule->mod_end - firstModule->mod_start);

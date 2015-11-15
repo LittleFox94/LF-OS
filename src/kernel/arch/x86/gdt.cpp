@@ -13,6 +13,7 @@
 #define GDT_ENTRIES 		6
 
 static uint64_t gdt[GDT_ENTRIES];
+uint32_t tss[32] = { 0, 0, 0x10 };
 
 void gdt_set_entry(int i, unsigned int base, unsigned int limit, int flags)
 {
@@ -26,8 +27,6 @@ void gdt_set_entry(int i, unsigned int base, unsigned int limit, int flags)
 
 void init_gdt()
 {
-    uint32_t tss[32] = { 0, 0, 0x10 };
-
     struct {
         uint16_t limit;
         void* pointer;

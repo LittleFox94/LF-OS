@@ -1,4 +1,5 @@
 #include <lf_os.h>
+#include <scheduler.h>
 
 /** Bearbeitet Exceptions die einen Absturz des Prozessors zufolge haben.
   * Diese Funktion darf nur aufgerufen werden wenn der Fehler nicht korrigiert
@@ -13,9 +14,13 @@ void Exception(int number, char *errorMsg)
   * Auf x86 wäre dies ein IRQ
   * Diese Funktion wird vom architekturspezifischen Teil aufgerufen.
   */
-void *HardwareInterrupt(int number, void *cpu)
+struct cpu_state* HardwareInterrupt(int number, struct cpu_state* cpu)
 {
     // Todo: an Treiber weitergeben
+
+    if(number == 0x20) {
+        cpu = Scheduler::nextTask(cpu);
+    }
 
     return cpu;
 }

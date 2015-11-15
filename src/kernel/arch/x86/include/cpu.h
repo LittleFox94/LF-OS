@@ -20,6 +20,6 @@ struct cpu_state {
     uint32_t   eflags;
     uint32_t   esp;
     uint32_t   ss;
-};
+}__attribute__((packed));
 
 #endif

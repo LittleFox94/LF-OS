@@ -199,9 +199,20 @@ extern "C" struct cpu_state *interrupt_handler(struct cpu_state *cpu)
 
 struct cpu_state *irq_handler(struct cpu_state *cpu)
 {
-    HardwareInterrupt(cpu->intr, (void*)cpu);
+    int number = cpu->intr;
 
-    return cpu;
+    struct cpu_state* new_cpu = HardwareInterrupt(cpu->intr, cpu);
+
+    if (number >= 0x28) {
+        outb(0xa0, 0x20);
+    }
+    outb(0x20, 0x20);
+
+    if(cpu != new_cpu) {
+        tss[1] = (uint32_t) (new_cpu + 1);
+    }
+
+    return new_cpu;
 }
 
 struct cpu_state *lf_abi_handler(struct cpu_state *cpu)

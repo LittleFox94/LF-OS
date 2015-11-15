@@ -1,7 +1,16 @@
 #include <lf_os.h>
-#include <lf_ffs.h>
+#include <string.h>
+#include <scheduler.h>
 
 #include "../../modules/module.h"
+
+void testTask1() {
+    while(true) {
+        for(char c = 'A'; c <= 'Z'; c++) {
+            *((char*)0xB8000) = c;
+        }
+    }
+}
 
 void kernelMain(char *ptrInitrd, int initrdLength)
 {
@@ -10,7 +19,6 @@ void kernelMain(char *ptrInitrd, int initrdLength)
     while((*magic_pointer) != 0x1F0510AD && magic_pointer < (uint32_t*)(ptrInitrd + initrdLength)) {
         magic_pointer += sizeof(uint32_t);
     }
-
 
     struct module_collection* modules = (struct module_collection*)magic_pointer;
 
@@ -32,6 +40,11 @@ void kernelMain(char *ptrInitrd, int initrdLength)
             }
         }
     }
+
+    Scheduler::initialize();
+    Scheduler::addTask(testTask1);
+
+    asm("sti");
 
     while(1);
 }

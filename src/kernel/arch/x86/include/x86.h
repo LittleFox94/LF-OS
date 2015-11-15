@@ -5,6 +5,8 @@
 #include "cpu.h"
 #include "io.h"
 
+extern uint32_t tss[32];
+
 /** This function doesn't depend on any other function
   * so it can be called anytime
   */
