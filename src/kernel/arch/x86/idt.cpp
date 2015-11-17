@@ -1,4 +1,5 @@
 #include <lf_os.h>
+#include <scheduler.h>
 
 extern "C" void isr0();
 extern "C" void isr1();
@@ -208,9 +209,7 @@ struct cpu_state *irq_handler(struct cpu_state *cpu)
     }
     outb(0x20, 0x20);
 
-    if(cpu != new_cpu) {
-        tss[1] = (uint32_t) (new_cpu + 1);
-    }
+    tss[1] = (uint32_t) (new_cpu + 1);
 
     return new_cpu;
 }
@@ -222,7 +221,14 @@ struct cpu_state *lf_abi_handler(struct cpu_state *cpu)
     params[1] = &cpu->ecx;
     params[2] = &cpu->edx;
 
-    Syscall(cpu->eax, params, 3);
+    bool change_task = false;
+
+    Syscall(cpu->eax, params, 3, &change_task);
+
+    if(change_task) {
+        cpu = Scheduler::nextTask(cpu);
+        tss[1] = (uint32_t)(cpu + 1);
+    }
 
     return cpu;
 }
