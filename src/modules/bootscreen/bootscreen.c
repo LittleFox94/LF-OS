@@ -5,8 +5,9 @@ void module_init_bootscreen() {
         vga[i] = ' ' | (0x00 << 8);
     }
 
-    char* hello_message = "LF OS - the 4th attempt\n"
-                          "========================\n\n"
+    char* hello_message = "   LF OS - the 4th attempt\n"
+                          "  =========================\n"
+                          "Release built on " __DATE__ " at " __TIME__ "\n\n"
                           "Booting ...";
 
     int x = 0, y = 0;
