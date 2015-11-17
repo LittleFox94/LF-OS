@@ -383,7 +383,7 @@ isr47:
 isr147:
     cli
     push 0
-    push 48
+    push 147
     jmp isr_common_stub
 	
 extern interrupt_handler
