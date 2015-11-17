@@ -9,11 +9,14 @@ class Scheduler {
     public:
         static void initialize();
 
-        static pid_t addTask(void(*task)());
+        static pid_t addTask(void(*task)(), bool kernel=false);
         static struct cpu_state* nextTask(struct cpu_state* current);
 
         static void idleTask();
-        
+       
+        static void sleep(uint32_t numInterrupts);
+        static void fork();
+
         struct Task {
             uint8_t priority;
             uint8_t priority_counter;
@@ -36,7 +39,7 @@ class Scheduler {
 
     private:
         static struct Task* getTaskForPid(pid_t pid);
-        static struct Task* createNewTask(void(*task)());
+        static struct Task* createNewTask(void(*task)(), bool kernel=false);
         static void insertTask(Task* task);
 
         static struct Task* _firstTask;

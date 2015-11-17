@@ -1,13 +1,30 @@
 #include <lf_os.h>
 #include <string.h>
 #include <scheduler.h>
+#include <syscalls.h>
 
 #include "../../modules/module.h"
 
 void testTask1() {
     while(true) {
-        for(char c = 'A'; c <= 'Z'; c++) {
-            *((char*)0xB8000) = c;
+        char* chars = "-\\|/-\\|/";
+        while(*chars) {
+            *((char*)0xB8000) = *chars;
+            chars++;
+
+            asm("int $147"::"a"(make_syscall_code(SyscallGroup::ProcessManagement, Syscalls::Sleep)), "b"(8));
+        }
+    }
+}
+
+void testTask2() {
+    while(true) {
+        char* chars = "-/|\\-/|\\";
+        while(*chars) {
+            *((char*)0xB8002) = *chars;
+            chars++;
+
+            asm("int $147"::"a"(make_syscall_code(SyscallGroup::ProcessManagement, Syscalls::Sleep)), "b"(0));
         }
     }
 }
@@ -43,6 +60,7 @@ void kernelMain(char *ptrInitrd, int initrdLength)
 
     Scheduler::initialize();
     Scheduler::addTask(testTask1);
+    Scheduler::addTask(testTask2);
 
     asm("sti");
 
