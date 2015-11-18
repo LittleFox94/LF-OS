@@ -25,6 +25,17 @@ extern "C"
         return *(const unsigned char*)a - *(const unsigned char*)b;
     }
 
+    int strlen(const char* s)
+    {
+        int i = 0;
+        while(*s) {
+            s++;
+            i++;
+        }
+
+        return i;
+    }
+
     void *memset(void *dest, int val, size_t n)
     {
         for(size_t i = 0; i < n; i++)

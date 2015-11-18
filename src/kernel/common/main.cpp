@@ -5,26 +5,47 @@
 
 #include "../../modules/module.h"
 
-void testTask1() {
-    while(true) {
-        char* chars = "-\\|/-\\|/";
-        while(*chars) {
-            *((char*)0xB8000) = *chars;
-            chars++;
+void render(char* text, int pos) {
+    uint16_t* base_vga = (uint16_t*)(0xB8000 + (10 * 80 * 2));
+    pos = Scheduler::getCurrentPid() - 3;
 
-            asm("int $147"::"a"(make_syscall_code(SyscallGroup::ProcessManagement, Syscalls::Sleep)), "b"(8));
+    char* local_text = text + pos;
+
+    while(true) {
+        while(*local_text) {
+            base_vga[pos] = *local_text | (0x07 << 8);
+            local_text++;
+
+            asm("int $147"::"a"(make_syscall_code(SyscallGroup::ProcessManagement, Syscalls::Sleep)), "b"(250));
+        }
+
+        local_text = text;
+    }
+}
+
+void testTask1() {
+    char* text = "This is an example text rendered by a fork for each character       * * *       ";
+
+    for(int i = 0; i < strlen(text); i++) {
+        pid_t fork_pid;
+        asm("int $147":"=b"(fork_pid):"a"(make_syscall_code(SyscallGroup::ProcessManagement, Syscalls::Fork)));
+
+        if(fork_pid == 0) {
+            render(text, i);
         }
     }
+
+    while(true);
 }
 
 void testTask2() {
     while(true) {
         char* chars = "-/|\\-/|\\";
         while(*chars) {
-            *((char*)0xB8002) = *chars;
+            *((char*)0xB8000) = *chars;
             chars++;
 
-            asm("int $147"::"a"(make_syscall_code(SyscallGroup::ProcessManagement, Syscalls::Sleep)), "b"(0));
+            asm("int $147"::"a"(make_syscall_code(SyscallGroup::ProcessManagement, Syscalls::Sleep)), "b"(100));
         }
     }
 }

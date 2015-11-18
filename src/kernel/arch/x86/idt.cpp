@@ -223,7 +223,7 @@ struct cpu_state *lf_abi_handler(struct cpu_state *cpu)
 
     bool change_task = false;
 
-    Syscall(cpu->eax, params, 3, &change_task);
+    Syscall(cpu->eax, params, 3, &change_task, cpu);
 
     if(change_task) {
         cpu = Scheduler::nextTask(cpu);

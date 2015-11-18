@@ -10,7 +10,7 @@ void kernelMain(char *ptrInitrd, int initrdLength);
 
 void Exception(int number, char *errorMsg);
 struct cpu_state *HardwareInterrupt(int number, struct cpu_state *cpu);
-void Syscall(int number, unsigned int **params, int count, bool* change_task);
+void Syscall(int number, unsigned int **params, int count, bool* change_task, struct cpu_state* cpu);
 
 void pmm_mark_used(void *mem);
 void pmm_mark_free(void *mem);

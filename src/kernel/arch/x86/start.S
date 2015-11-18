@@ -17,6 +17,6 @@ align 4
 section .text
 
 _start:
-	mov esp, 0x400000 	; Stack an 4MB
+	mov esp, 0x180000 	; Stack an 1.5MB
 	push ebx			; push multiboot-structure to stack -> argument for archMain()
 	call archMain

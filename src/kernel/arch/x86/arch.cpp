@@ -1,6 +1,7 @@
 #include <lf_os.h>
 #include "include/x86.h"
 #include "include/multiboot.h"
+#include "include/pit.h"
 
 extern "C" void archMain(struct multiboot_info *mbi)
 {
@@ -8,6 +9,7 @@ extern "C" void archMain(struct multiboot_info *mbi)
     init_gdt();
     init_idt();
     init_irqs();
+    init_pit();
 
     // getting initrd module
     char *initrd;

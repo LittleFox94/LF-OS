@@ -127,11 +127,29 @@ void Scheduler::insertTask(Task* newTask) {
     _firstTask->prev = newTask;
 }
 
-void Scheduler::fork() {
+void Scheduler::fork(struct cpu_state* cpu) {
+    memcpy((char*)&_currentTask->cpu, (char*)cpu, sizeof(struct cpu_state));
+
     Task* newTask = (Task*)pmm_alloc();
     memcpy((char*)newTask, (char*)_currentTask, sizeof(Task));
 
     newTask->pid = _lastPid++;
+    newTask->cpu.esp = (uint32_t)pmm_alloc();
+
+    uint32_t offset = _currentTask->cpu.esp % PAGESIZE;
+    uint32_t esp_offset = PAGESIZE - offset; 
+
+    if(offset != 0) {
+        memcpy((char*)(newTask->cpu.esp - esp_offset), (char*)_currentTask->cpu.esp, esp_offset);
+        newTask->cpu.esp -= esp_offset;
+    }
 
     insertTask(newTask);
+
+    cpu->ebx = newTask->pid; // the old task get's the PID of the fork
+    newTask->cpu.ebx = 0; // the fork gets 0
+}
+
+pid_t Scheduler::getCurrentPid() {
+    return _currentTask->pid;
 }

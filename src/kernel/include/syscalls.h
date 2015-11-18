@@ -6,8 +6,9 @@ enum class SyscallGroup {
 };
 
 enum class Syscalls {
-    Sleep = 1,
-    Fork = 2,
+    Sleep          = 1,
+    Fork           = 2,
+    GetProcessInfo = 3,
 };
 
 static inline uint32_t make_syscall_code(SyscallGroup group, Syscalls syscall) {

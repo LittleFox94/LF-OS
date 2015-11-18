@@ -30,7 +30,7 @@ struct cpu_state* HardwareInterrupt(int number, struct cpu_state* cpu)
   * Wird vom architekturspezifischen Teil aufgerufen.
   * Die Parameter sind gleichzeitig auch Rückgabeparameter
   */
-void Syscall(int number, unsigned int **params, int count, bool* change_task)
+void Syscall(int number, unsigned int **params, int count, bool* change_task, struct cpu_state* cpu)
 {
     SyscallGroup group = static_cast<SyscallGroup>(number >> 16);
     Syscalls syscall = static_cast<Syscalls>(number & 0xFFFF);
@@ -43,8 +43,10 @@ void Syscall(int number, unsigned int **params, int count, bool* change_task)
                     *change_task = true;
                     break;
                 case Syscalls::Fork:
-                    Scheduler::fork();
+                    Scheduler::fork(cpu);
                     break;
+                case Syscalls::GetProcessInfo:
+                    *params[0] = Scheduler::getCurrentPid();
                 default:
                     break;
             }

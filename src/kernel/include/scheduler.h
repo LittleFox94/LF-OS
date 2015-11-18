@@ -15,7 +15,8 @@ class Scheduler {
         static void idleTask();
        
         static void sleep(uint32_t numInterrupts);
-        static void fork();
+        static void fork(struct cpu_state* cpu);
+        static pid_t getCurrentPid();
 
         struct Task {
             uint8_t priority;
