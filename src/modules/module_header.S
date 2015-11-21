@@ -4,6 +4,7 @@
 ; It is not supposed to be executed. Every module is it's own program.
 
 extern module_init_bootscreen
+extern module_init_vga_bootscreen
 
 global _start
 
@@ -32,7 +33,7 @@ align 4
     ModuleEntries:
         __bootscreen:
             dd (MODULE_ARCH_SETUP + 1)
-            dd module_init_bootscreen
+            dd module_init_vga_bootscreen
 
 _start:
     cli
